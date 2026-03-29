@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// --- 1. IMPORT useNavigate ---
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatRupiah } from '../utils/format.js';
 import {
@@ -50,41 +49,34 @@ function ProductDetailPage() {
     window.scrollTo(0, 0);
   }, [productId]);
 
-  // --- 2. BUAT FUNGSI handleAddToCart ---
   const handleAddToCart = async () => {
-    // Cek dulu token login dari local storage
     const token = localStorage.getItem('token');
 
-    // Kalo gak ada token, kasih peringatan dan arahin ke halaman login
     if (!token) {
       alert('Kamu harus login dulu untuk menambahkan produk ke keranjang!');
       navigate('/login');
-      return; // Hentikan eksekusi fungsi
+      return; 
     }
 
-    // Kalo ada token, kita coba kirim data ke backend
     try {
       const response = await fetch(`${backendUrl}/api/cart/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Kirim token buat otentikasi
+          'Authorization': `Bearer ${token}` 
         },
-        body: JSON.stringify({ productId: productId }) // Kirim ID produknya
+        body: JSON.stringify({ productId: productId }) 
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        // Kalo ada error dari backend (misal: produk sudah ada), tampilkan pesannya
         throw new Error(data.message || 'Gagal menambahkan produk.');
       }
 
-      // Kalo berhasil, kasih notifikasi sukses!
       alert('Produk berhasil ditambahkan ke keranjang! 🎉');
       
     } catch (error) {
-      // Kalo ada error lain, tampilkan juga pesannya
       console.error('Error:', error);
       alert(error.message);
     }
@@ -137,10 +129,8 @@ function ProductDetailPage() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto p-4 sm:p-6">
-        {/* --- KARTU UTAMA PRODUK --- */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Galeri Gambar */}
             <div className="lg:col-span-5">
               <div className="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden">
                 <img
@@ -181,7 +171,6 @@ function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Info Produk */}
             <div className="lg:col-span-7">
               <h1 className="text-2xl font-bold text-gray-900 leading-tight">
                 {product.name}
@@ -209,7 +198,6 @@ function ProductDetailPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                {/* --- 3. PASANG FUNGSI KE TOMBOL --- */}
                 <button 
                   onClick={handleAddToCart}
                   className="w-full border-2 border-blue-500 hover:bg-blue-50 text-blue-500 font-bold py-3 rounded-lg text-base transition-colors flex items-center justify-center space-x-2">
@@ -221,7 +209,6 @@ function ProductDetailPage() {
                 </button>
               </div>
 
-              {/* Deskripsi Produk */}
               <div className="mt-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
                   Deskripsi Produk
@@ -255,7 +242,6 @@ function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Info Penjual */}
         <div className="bg-white p-6 rounded-lg shadow-md mt-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">

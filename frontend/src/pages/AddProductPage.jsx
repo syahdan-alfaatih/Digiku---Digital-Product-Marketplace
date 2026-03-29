@@ -115,13 +115,11 @@ function AddProductPage() {
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Tambah Produk Digital Baru</h2>
         
         <form onSubmit={handleSubmit}>
-          {/* ... Input Nama ... */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Nama Produk</label>
             <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" />
           </div>
 
-          {/* ... Input Thumbnail ... */}
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2">Gambar Thumbnail (Wajib)</label>
             <div 
@@ -157,7 +155,6 @@ function AddProductPage() {
             </div>
           </div>
           
-          {/* ... Input Galeri ... */}
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2">Gambar Galeri (Opsional, maks. 8)</label>
             <input id="gallery-upload" name="galleryImages" type="file" multiple className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" onChange={handleGalleryChange} accept="image/*" />
@@ -179,7 +176,6 @@ function AddProductPage() {
             )}
           </div>
 
-          {/* ... Input File Produk ... */}
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product-file-upload">
               File Produk Digital (Wajib)
@@ -212,7 +208,6 @@ function AddProductPage() {
             <p className="text-xs text-gray-500 mt-1">Upload file .zip, .rar, atau .pdf yang akan diterima pembeli (Maks. 50MB).</p>
           </div>
 
-          {/*input dan deskripsi harga*/}
           <div className="mb-4"><label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">Deskripsi</label><textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} required className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-32"></textarea></div>
           <div className="mb-6"><label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">Harga (Rp)</label><input id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} required className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" /></div>
 

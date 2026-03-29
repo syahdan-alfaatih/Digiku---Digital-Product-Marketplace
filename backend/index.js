@@ -41,18 +41,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // Batas file naik jadi 50MB
+  limits: { fileSize: 50 * 1024 * 1024 }, 
   fileFilter: (req, file, cb) => {
-    // Cek fieldname untuk menentukan aturan file
+
     if (file.fieldname === 'thumbnail' || file.fieldname === 'galleryImages') {
-      // Aturan untuk gambar
+ 
       if (file.mimetype.startsWith('image/')) {
         cb(null, true);
       } else {
         cb(new Error('Thumbnail dan Galeri hanya boleh gambar!'), false);
       }
     } else if (file.fieldname === 'productFile') {
-      // Aturan untuk file produk digital
+
       const allowedTypes = ['application/zip', 'application/x-rar-compressed', 'application/pdf'];
       if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
@@ -60,7 +60,7 @@ const upload = multer({
         cb(new Error('Tipe file produk tidak valid! Harap upload .zip, .rar, atau .pdf'), false);
       }
     } else {
-      // Tolak file lain jika ada
+
       cb(null, false);
     }
   },
@@ -71,10 +71,6 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('✅ berhasil terhubung ke MongoDB Atlas'))
   .catch((error) => console.log('❌ gagal konek DB:', error.message));
-
-// =================================================================
-// --- API ROUTES ---
-// =================================================================
 
 // --- ROOT ROUTE ---
 app.get('/', (req, res) => {
@@ -333,16 +329,15 @@ app.post('/api/cart/add', authMiddleware, async (req, res) => {
   }
 });
 
-// GET - Ambil semua data produk di keranjang user
 app.get('/api/cart', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId).populate({
-      path: 'cart', // Kita mau lihat isi dari field 'cart'
-      select: 'name price thumbnailUrl seller', // Ambil field yg perlu aja dari produk
+      path: 'cart', 
+      select: 'name price thumbnailUrl seller', 
       populate: {
-        path: 'seller', // Di dalam produk, kita juga mau lihat detail seller-nya
-        select: 'username' // Cukup ambil username-nya saja
+        path: 'seller', 
+        select: 'username' 
       }
     });
 
@@ -356,14 +351,14 @@ app.get('/api/cart', authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE - Hapus produk dari keranjang
+// DELETE 
 app.delete('/api/cart/remove/:productId', authMiddleware, async (req, res) => {
   try {
     const { productId } = req.params;
     const userId = req.user.id;
 
     await User.findByIdAndUpdate(userId, {
-      $pull: { cart: productId } // $pull adalah magic dari MongoDB buat ngapus item dari array
+      $pull: { cart: productId } 
     });
 
     res.status(200).json({ message: 'Produk berhasil dihapus dari keranjang.' });
@@ -375,7 +370,6 @@ app.delete('/api/cart/remove/:productId', authMiddleware, async (req, res) => {
 app.post('/api/orders/create', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
-    // 1. Ambil data user beserta detail produk di keranjangnya
     const user = await User.findById(userId).populate({
       path: 'cart',
       select: 'name price seller'
@@ -385,7 +379,6 @@ app.post('/api/orders/create', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Keranjang Anda kosong.' });
     }
 
-    // 2. Buat daftar pesanan baru dari setiap item di keranjang
     const newOrders = user.cart.map(item => ({
       product: item._id,
       buyer: userId,
@@ -393,10 +386,8 @@ app.post('/api/orders/create', authMiddleware, async (req, res) => {
       priceAtPurchase: item.price,
     }));
     
-    // 3. Simpan semua pesanan baru ke database
     await Order.insertMany(newOrders);
     
-    // 4. Kosongkan keranjang user
     user.cart = [];
     await user.save();
     
@@ -408,22 +399,20 @@ app.post('/api/orders/create', authMiddleware, async (req, res) => {
 });
 
 
-// GET - Mengambil riwayat pesanan milik user
+// GET
 app.get('/api/orders/my-orders', authMiddleware, async (req, res) => {
   try {
     const buyerId = req.user.id;
     
-    // Cari semua order dimana 'buyer' adalah user yang login
     const orders = await Order.find({ buyer: buyerId })
-      .sort({ createdAt: -1 }) // Urutkan dari yang paling baru
+      .sort({ createdAt: -1 }) 
       .populate({
         path: 'product',
-        // Kita butuh semua detail ini untuk ditampilkan di halaman "Pesanan Saya"
         select: 'name thumbnailUrl productFileUrl' 
       })
       .populate({
         path: 'seller',
-        select: 'username' // Ambil juga nama penjualnya
+        select: 'username' 
       });
       
     res.status(200).json(orders);

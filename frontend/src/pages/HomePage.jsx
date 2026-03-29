@@ -60,7 +60,6 @@ function HomePage() {
       {/* header */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Kiri: Logo & Hamburger */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
               <span className="text-2xl font-bold text-blue-600 hidden sm:block">
@@ -73,7 +72,6 @@ function HomePage() {
             </button>
           </div>
 
-          {/* Tengah: Search Bar */}
           <div className="flex-1 max-w-4xl px-4">
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
@@ -87,7 +85,6 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Kanan: Aksi User & Auth */}
           <div className="flex items-center space-x-4 flex-shrink-0 relative">
             <Link 
               to="/cart" 
@@ -161,10 +158,8 @@ function HomePage() {
         </div>
       </header>
 
-      {/* Hero Banner */}
       <HeroBanner />
 
-      {/* Main Content */}
       <main className="container mx-auto p-4 sm:p-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Produk Terbaru</h2>
         {loading ? (

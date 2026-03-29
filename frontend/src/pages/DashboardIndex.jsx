@@ -6,7 +6,6 @@ import {
   FaShoppingCart, FaChartLine
 } from 'react-icons/fa';
 
-// komponen dashboard buyer
 const BuyerDashboard = () => {
   const { user, token, updateUserContext } = useContext(AuthContext);
   const [profilePreview, setProfilePreview] = useState(null);
@@ -126,7 +125,6 @@ const BuyerDashboard = () => {
   );
 };
 
-// komponen dashboard seller
 const SellerDashboard = () => {
     const { user, token, updateUserContext } = useContext(AuthContext);
   

@@ -81,7 +81,6 @@ function MyOrdersPage() {
                   </p>
                   <p className="font-semibold text-blue-600 mt-2">{formatRupiah(order.priceAtPurchase)}</p>
                 </div>
-                {/* tombol download */}
                 <a 
                   href={`${backendUrl}${order.product.productFileUrl}`} 
                   download 

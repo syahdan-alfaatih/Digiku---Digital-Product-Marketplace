@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function EditProductPage() {
-  const { productId } = useParams(); // Mengambil ID produk dari URL
+  const { productId } = useParams(); 
   const navigate = useNavigate();
   const { token } = useContext(AuthContext);
 
@@ -14,7 +14,6 @@ function EditProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  // ambil data produk saat ini dari server saat halaman dibuka
   useEffect(() => {
     const fetchProductData = async () => {
       setIsLoading(true);
@@ -39,7 +38,6 @@ function EditProductPage() {
     fetchProductData();
   }, [productId, navigate]);
 
-  // kirim data yg update ke server
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsUpdating(true);

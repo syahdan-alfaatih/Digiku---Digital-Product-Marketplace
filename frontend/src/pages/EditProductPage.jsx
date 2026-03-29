@@ -73,7 +73,6 @@ function EditProductPage() {
       <div className="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Edit Produk</h2>
         <form onSubmit={handleSubmit}>
-          {/* isi form */}
            <div className="mb-4">
              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Nama Produk</label>
              <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />

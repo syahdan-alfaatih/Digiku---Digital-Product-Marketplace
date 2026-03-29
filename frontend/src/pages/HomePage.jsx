@@ -19,12 +19,14 @@ function HomePage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const backendUrl = 'http://localhost:3000';
+  // Ganti ke Base URL saja biar fleksibel
+  const backendBaseUrl = 'http://localhost:5000'; 
 
-  const profileImageUrl = user?.profilePicture
-    ? `${backendUrl}${user.profilePicture}`
+  const userPic = user?.profile_pic || user?.profilePicture;
+  const profileImageUrl = userPic
+    ? `${backendBaseUrl}${userPic}`
     : `https://api.dicebear.com/8.x/initials/svg?seed=${user?.username || 'user'}`;
-
+    
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -39,7 +41,8 @@ function HomePage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${backendUrl}/api/products`);
+        // Fetch ke endpoint produk yang benar
+        const response = await fetch(`${backendBaseUrl}/api/products`);
         const data = await response.json();
         console.log('Respon dari server:', response);
         console.log('Data dari server:', data);
@@ -173,13 +176,13 @@ function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {products.map((p) => (
               <Link
-                to={`/products/${p._id}`}
-                key={p._id}
+                to={`/products/${p.id}`} // Ganti _id jadi id
+                key={p.id} // Ganti _id jadi id
                 className="flex flex-col group bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="relative w-full h-48">
                   <img
-                    src={`${backendUrl}${p.thumbnailUrl}`}
+                    src={`${backendBaseUrl}${p.thumbnail_url}`} // Ganti thumbnailUrl jadi thumbnail_url
                     alt={p.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {

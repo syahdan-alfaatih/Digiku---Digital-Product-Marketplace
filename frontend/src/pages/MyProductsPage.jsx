@@ -8,13 +8,16 @@ function MyProductsPage() {
   const [myProducts, setMyProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useContext(AuthContext);
-  const backendUrl = 'http://localhost:3000';
+  
+  // 1. Ganti ke Port 5000
+  const backendUrl = 'http://localhost:5000';
 
   useEffect(() => {
     const fetchMyProducts = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${backendUrl}/api/products/my-products`, {
+        // 2. Endpoint diganti ke /api/products/seller/me
+        const response = await fetch(`${backendUrl}/api/products/seller/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -39,8 +42,7 @@ function MyProductsPage() {
 
   // fungsi menghapus produk
   const handleDelete = async (productId) => {
-    // konfirmasi hapus
-    if (!window.confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen? Aksi ini tidak bisa dibatalkan.')) {
+    if (!window.confirm('Apakah Anda yakin ingin menghapus produk ini? Produk akan disembunyikan dari toko.')) {
       return;
     }
 
@@ -56,8 +58,8 @@ function MyProductsPage() {
 
       if (response.ok) {
         alert(data.message);
-        // update tampilan dan menghapus produk di state
-        setMyProducts(prevProducts => prevProducts.filter(p => p._id !== productId));
+        // 3. Filter pakai 'id' bukan '_id'
+        setMyProducts(prevProducts => prevProducts.filter(p => p.id !== productId));
       } else {
         throw new Error(data.message || 'Gagal menghapus produk.');
       }
@@ -99,10 +101,10 @@ function MyProductsPage() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {myProducts.map(product => (
-                <tr key={product._id}>
+                <tr key={product.id}> {/* Ganti _id jadi id */}
                   <td className="py-4 px-4 align-middle">
                     <img 
-                        src={`${backendUrl}${product.thumbnailUrl}`} 
+                        src={`${backendUrl}${product.thumbnail_url}`} // Ganti thumbnailUrl jadi thumbnail_url
                         alt={product.name} 
                         className="h-12 w-16 object-cover rounded-md" 
                         onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/100x75/EEE/31343C?text=Error' }}
@@ -112,7 +114,7 @@ function MyProductsPage() {
                   <td className="py-4 px-4 text-sm text-gray-600 align-middle">{formatRupiah(product.price)}</td>
                   <td className="py-4 px-4 text-sm flex items-center space-x-2 align-middle">
                     <Link 
-                      to={`/edit-product/${product._id}`}
+                      to={`/edit-product/${product.id}`} // Ganti _id jadi id
                       className="inline-block text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50 transition-colors"
                       title="Edit Produk"
                     >
@@ -120,7 +122,7 @@ function MyProductsPage() {
                     </Link>
                     
                     <button 
-                        onClick={() => handleDelete(product._id)}
+                        onClick={() => handleDelete(product.id)} // Ganti _id jadi id
                         className="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-50 transition-colors"
                         title="Hapus Produk"
                     >

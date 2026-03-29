@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-// Import Halaman
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
@@ -14,7 +13,6 @@ import EditProductPage from './pages/EditProductPage.jsx';
 import CartPage from './pages/CartPage.jsx';
 import MyOrdersPage from './pages/MyOrdersPage.jsx';
 
-// Import Komponen Penjaga
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 export const router = createBrowserRouter([

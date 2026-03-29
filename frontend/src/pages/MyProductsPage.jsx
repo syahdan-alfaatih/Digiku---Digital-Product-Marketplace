@@ -37,9 +37,7 @@ function MyProductsPage() {
     }
   }, [token]);
 
-  // fungsi menghapus produk
   const handleDelete = async (productId) => {
-    // konfirmasi hapus
     if (!window.confirm('Apakah Anda yakin ingin menghapus produk ini secara permanen? Aksi ini tidak bisa dibatalkan.')) {
       return;
     }
@@ -56,7 +54,6 @@ function MyProductsPage() {
 
       if (response.ok) {
         alert(data.message);
-        // update tampilan dan menghapus produk di state
         setMyProducts(prevProducts => prevProducts.filter(p => p._id !== productId));
       } else {
         throw new Error(data.message || 'Gagal menghapus produk.');

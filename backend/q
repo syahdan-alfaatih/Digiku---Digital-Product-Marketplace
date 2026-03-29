@@ -1,0 +1,12 @@
+               List of relations
+ Schema |        Name        | Type  |  Owner   
+--------+--------------------+-------+----------
+ public | Cart               | table | postgres
+ public | Order              | table | postgres
+ public | OrderItem          | table | postgres
+ public | Payment            | table | postgres
+ public | Product            | table | postgres
+ public | User               | table | postgres
+ public | _prisma_migrations | table | postgres
+(7 rows)
+

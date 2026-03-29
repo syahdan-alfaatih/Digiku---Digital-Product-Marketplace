@@ -1,5 +1,5 @@
 # Digiku---Digital-Product-Marketplace
-Digiku adalah proyek personal untuk membangun sebuah marketplace produk digital menggunakan MERN Stack (MongoDB, Express.js, React.js, Node.js). Aplikasi ini mensimulasikan alur jual-beli aset digital, mulai dari upload produk oleh penjual hingga proses unduh oleh pembeli.
+Digiku adalah proyek personal untuk membangun sebuah marketplace produk digital menggunakan MERN Stack (PostgreSQL, Express.js, React.js, Node.js). Aplikasi ini mensimulasikan alur jual-beli aset digital, mulai dari upload produk oleh penjual hingga proses unduh oleh pembeli.
 
 Proyek ini dibuat sebagai bagian dari proses belajar dan saat ini statusnya sedang on-hold.
 
@@ -16,4 +16,6 @@ Proyek ini dibuat sebagai bagian dari proses belajar dan saat ini statusnya seda
 💻Teknologi 
 - Frontend: React.js, React Router, TailwindCSS
 
-- Backend: Node.js, Express.jsDatabase: MongoDB (dengan Mongoose)Lainnya: JWT, Bcrypt.js, Multer
+- Backend: Node.js, Express.js
+
+- Database: PostgreSQL

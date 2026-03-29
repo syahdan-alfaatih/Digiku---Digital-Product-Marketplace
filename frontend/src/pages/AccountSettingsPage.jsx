@@ -8,7 +8,8 @@ function AccountSettingsPage() {
   const handleSwitchRole = async (newRole) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/user/switch-role', {
+      // PERBAIKAN: Port 5000
+      const response = await fetch('http://localhost:5000/api/user/switch-role', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +37,8 @@ function AccountSettingsPage() {
     
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/user/apply-seller', {
+      // PERBAIKAN: Port 5000
+      const response = await fetch('http://localhost:5000/api/user/apply-seller', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -64,9 +66,9 @@ function AccountSettingsPage() {
       
       {/* ganti mode */}
       {user?.roles.includes('seller') && (
-        <div>
+        <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-700">Mode Akun</h3>
-          <p className="text-gray-600 mb-4">Saat ini Anda berada dalam mode '{user.activeRole}'.</p>
+          <p className="text-gray-600 mb-4">Saat ini Anda berada dalam mode <strong>{user.activeRole === 'seller' ? 'Penjual' : 'Pembeli'}</strong>.</p>
           
           {user.activeRole === 'buyer' && (
             <button
@@ -91,7 +93,7 @@ function AccountSettingsPage() {
       )}
 
       {/* upgrade akun */}
-      {user?.roles.length === 1 && user.roles.includes('buyer') && (
+      {user?.roles && user.roles.length === 1 && user.roles.includes('buyer') && (
         <div className="mt-8 border-t pt-6">
             <h3 className="text-lg font-semibold text-gray-700">Upgrade Akun</h3>
             <p className="text-gray-600 mb-4">Ingin mulai menjual produk digitalmu sendiri? Jadilah penjual sekarang!</p>

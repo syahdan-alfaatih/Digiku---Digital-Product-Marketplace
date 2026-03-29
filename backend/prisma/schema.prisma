@@ -1,0 +1,105 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(uuid())
+  username      String    @unique
+  email         String    @unique
+  password_hash String
+  profile_pic   String?   @default("")
+  banner_pic    String?   @default("")
+  roles         String[]  @default(["buyer"])
+  active_role   String    @default("buyer")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  
+  products      Product[] // Produk yang dijual
+  orders        Order[]   // Pesanan yang dibuat
+  cart_items    Cart[]    // Item di keranjang
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+model Product {
+  id            String      @id @default(uuid())
+  name          String
+  description   String
+  price         Float
+  thumbnail_url String
+  image_urls    String[]    // Array string di PostgreSQL
+  file_path     String      // productFileUrl di model lama
+  is_active     Boolean     @default(true)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  
+  seller_id     String
+  // [CASCADE] Hapus User -> Produk ini terhapus
+  seller        User        @relation(fields: [seller_id], references: [id], onDelete: Cascade)
+  
+  order_items   OrderItem[]
+  cart_items    Cart[]
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  status      String      @default("Pending")
+  total_price Float
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  buyer_id    String
+  // [CASCADE] Hapus User -> Order ini terhapus
+  buyer       User        @relation(fields: [buyer_id], references: [id], onDelete: Cascade)
+  
+  items       OrderItem[]
+  payment     Payment?
+}
+
+model OrderItem {
+  id         String  @id @default(uuid())
+  order_id   String
+  // [CASCADE] Hapus Order -> Item ini terhapus
+  order      Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  
+  product_id String
+  // [CASCADE] Hapus Product -> Item ini terhapus (INI SOLUSI ERROR KAMU TADI)
+  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  
+  price      Float   // priceAtPurchase
+}
+
+model Cart {
+  id         String   @id @default(uuid())
+  user_id    String
+  // [CASCADE] Hapus User -> Cart ini terhapus
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  product_id String
+  // [CASCADE] Hapus Product -> Cart ini terhapus
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  
+  created_at DateTime @default(now())
+}
+
+model Payment {
+  id        String    @id @default(uuid())
+  order_id  String    @unique
+  // [CASCADE] Hapus Order -> Payment ini terhapus
+  order     Order     @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  
+  provider  String
+  status    String
+  payload   Json?
+  paid_at   DateTime?
+}

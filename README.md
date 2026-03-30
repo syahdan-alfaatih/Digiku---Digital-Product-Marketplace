@@ -125,5 +125,5 @@ npm run dev
 
 Developed by **Syahdan Alfaatih**.
 
-A Teknik Informatika student who attends classes on weekends, spending the rest of the week building things and sharpening skills across the stack.
+A Computer Science student who attends classes on weekends, spending the rest of the week building things and sharpening skills across the stack.
 I'm actively shaping my career as an IT Generalist guy someone who doesn't just specialize in one lane, but understands how the pieces fit together: from backend logic and database design to frontend experience and system architecture. Digiku is one of the projects where I put that mindset into practice.

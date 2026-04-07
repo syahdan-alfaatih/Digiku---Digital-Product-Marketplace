@@ -19,7 +19,6 @@ This project uses a **monorepo architecture**, separating the frontend and backe
 | Tailwind CSS + PostCSS | Styling |
 | React Router DOM | Client-side routing |
 | Swiper | Carousel / slider UI |
-| Three.js + Vanta.js | 3D animated backgrounds |
 | jwt-decode | Auth token handling |
 
 ### Backend
